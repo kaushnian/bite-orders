@@ -3,9 +3,8 @@ import { TypographyH1 } from '@/components/ui/typography-h1';
 
 export default function Home() {
   return (
-    <main className="">
+    <main>
       <TypographyH1>Menu</TypographyH1>
-
       <ItemList />
     </main>
   );

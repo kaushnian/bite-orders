@@ -1,6 +1,5 @@
-import { MenuItem } from '@/data/menu-items';
+import { MenuItem } from '@/utils/menu-items';
 import Image from 'next/image';
-import { Button } from './ui/button';
 import { Card, CardContent, CardHeader } from './ui/card';
 import Link from 'next/link';
 
@@ -18,7 +17,7 @@ export default function Item({ item }: ItemProps) {
         <CardContent>
           <div>
             <h2 className="text-lg text-amber-600">{item.name}</h2>
-            <strong className="font-semibold text-red-800">{item.price / 100}$</strong>
+            <strong className="font-semibold text-red-800">${item.price / 100}</strong>
           </div>
         </CardContent>
       </Card>

@@ -1,30 +1,36 @@
-import { MENU_ITEMS } from '@/data/menu-items';
+import { CartStorageItem, useCartStorage } from '@/utils/cart-context';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { ChangeEvent } from 'react';
 
 type CartItemProps = {
-  id: string;
+  cartItem: CartStorageItem;
 };
 
-export default function CartItem({ id }: CartItemProps) {
-  const item = MENU_ITEMS.find(item => item.id === id);
+export default function CartItem({ cartItem }: CartItemProps) {
+  const { updateQty, remove } = useCartStorage();
 
-  if (!item) return notFound();
+  const changeQty = (e: ChangeEvent<HTMLInputElement>) => {
+    updateQty(cartItem.cartItemId, Number(e.target.value));
+  };
 
   return (
-    <div className="flex items-center gap-4 w-full">
-      <Image width={128} height={85} src={item.imageUrl} alt={item.name} />
+    <li>
+      <div className="flex items-center gap-4 w-full mb-4">
+        <Image width={128} height={85} src={cartItem.item.imageUrl} alt={cartItem.item.name} />
+        <div>
+          <h2 className="text-lg text-amber-600">{cartItem.item.name}</h2>
+          <strong className="font-semibold text-red-800">${cartItem.item.price / 100}</strong>
 
-      <div>
-        <h2 className="text-lg font-semibold text-amber-600">{item.name}</h2>
-
-        <p className="italic mb-2">{item.description}</p>
-
-        <strong className="font-semibold text-red-800">{item.price / 100}$</strong>
+          <div className="flex gap-4">
+            <Input type="number" value={cartItem.qty} onChange={changeQty} />
+            <Button variant="secondary" onClick={() => remove(cartItem.cartItemId)}>
+              Delete
+            </Button>
+          </div>
+        </div>
       </div>
-
-      <Button className="ml-auto">Add To Cart</Button>
-    </div>
+    </li>
   );
 }

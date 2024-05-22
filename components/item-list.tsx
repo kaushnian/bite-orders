@@ -1,5 +1,5 @@
 import Item from './item';
-import { MENU_ITEMS } from '../data/menu-items';
+import { MENU_ITEMS } from '../utils/menu-items';
 
 export default function ItemList() {
   return (
